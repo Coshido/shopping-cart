@@ -79,6 +79,18 @@ function App() {
   const [cart, setCart] = React.useState([]);
   const [orderedCart, setOrderedCart] = React.useState();
   const [shopItems, setShopItems] = React.useState([""]);
+  const [cartSize, setCartSize] = React.useState(0);
+  const [isCartShown, setIsCartShown] = React.useState(false);
+
+  const switchCartDisplay = (event) => {
+    let cartWrapper = document.querySelector(".cart-wrapper");
+    if (isCartShown) {
+      cartWrapper.style.zIndex = "1";
+    } else {
+      cartWrapper.style.zIndex = "-1";
+    }
+    setIsCartShown(!isCartShown);
+  };
 
   const addToCart = (item) => {
     setCart([...cart, item]);
@@ -119,13 +131,16 @@ function App() {
   //cart componentDidUpdate
   useEffect(() => {
     orderCart(cart);
+    setCartSize(Object.keys(cart).length);
+    console.log(orderedCart);
+
     //console.log(cart);
     //console.log(orderedCart);
   }, [cart]);
 
   return (
     <div className="wrapper">
-      <Nav />
+      <Nav switchCartDisplay={switchCartDisplay} />
       <Routes>
         <Route path="/" exact element={<Home />} />
         <Route
@@ -137,6 +152,8 @@ function App() {
         cart={orderedCart}
         addToCart={addToCart}
         removeFromCart={removeFromCart}
+        cartSize={cartSize}
+        switchCartDisplay={switchCartDisplay}
       />
     </div>
   );

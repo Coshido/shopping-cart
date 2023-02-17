@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function Nav() {
+function Nav(props) {
   const style = {
     textDecoration: "none",
     color: "#eef0eb",
@@ -17,7 +17,7 @@ function Nav() {
           <li>Shop</li>
         </Link>
         <Link style={style}>
-          <li>Cart</li>
+          <li onClick={props.switchCartDisplay}>Cart</li>
         </Link>
       </ul>
     </nav>
